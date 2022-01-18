@@ -1,5 +1,7 @@
 package common;
 
+import java.util.*;
+
 //  Definition for a binary tree node.
 public class TreeNode {
     public int val;
@@ -32,4 +34,64 @@ public class TreeNode {
         }
         return node;
     }
+
+    public String serialize(TreeNode root) {
+        if (root == null) return "";
+        StringBuilder result = new StringBuilder();
+        List<TreeNode> nodes = new LinkedList<>();
+        nodes.add(root);
+        while (!nodes.isEmpty() && nodes.stream().anyMatch(Objects::nonNull)) {
+            List<TreeNode> levelNodes = new ArrayList<>(nodes);
+            nodes.clear();
+            for (TreeNode node: levelNodes) {
+                if (node != null) {
+                    result.append(node.val);
+                    result.append(',');
+                    nodes.add(node.left);
+                    nodes.add(node.right);
+                } else {
+                    result.append("null,");
+                }
+            }
+        }
+        result.delete(result.length() - 1, result.length());
+        return result.toString();
+    }
+
+    public static TreeNode deserialize(String data) {
+        if ("".equals(data)) return null;
+        Integer[] nodes = new Integer[data.split(",").length];
+        int pointer = 0;
+        for (String node: data.split(",")) {
+            if ("null".equals(node)) nodes[pointer] = null;
+            else nodes[pointer] = Integer.valueOf(node);
+            pointer++;
+        }
+        TreeNode root = new TreeNode(nodes[0]);
+        List<TreeNode> parentLevelNodes = new LinkedList<>();
+        parentLevelNodes.add(root); // add root node/level
+        int index = 1;
+        while (!parentLevelNodes.isEmpty() && index < nodes.length) {
+            LinkedList<TreeNode> currentLevelNodes = new LinkedList<>();
+            for (TreeNode parentNode: parentLevelNodes) {
+                if (nodes[index] != null) {
+                    TreeNode leftNode = new TreeNode(nodes[index]);
+                    parentNode.left = leftNode;
+                    currentLevelNodes.add(leftNode);
+                }
+
+                if (nodes[index + 1] != null) {
+                    TreeNode rightNode = new TreeNode(nodes[index + 1]);
+                    parentNode.right = rightNode;
+                    currentLevelNodes.add(rightNode);
+                }
+
+                index += 2;
+            }
+            parentLevelNodes.clear();
+            parentLevelNodes.addAll(currentLevelNodes);
+        }
+        return root;
+    }
+
 }
