@@ -1,4 +1,4 @@
-package interview;
+package interview.google;
 
 public class IDTriangle {
     public static String solution(long x, long y) {

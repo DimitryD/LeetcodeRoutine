@@ -1,4 +1,4 @@
-package interview;
+package interview.google;
 
 public class Staircase {
     public static int solution(int n) {

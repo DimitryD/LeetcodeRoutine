@@ -1,4 +1,4 @@
-package interview;
+package interview.google;
 
 import org.junit.jupiter.api.Test;
 

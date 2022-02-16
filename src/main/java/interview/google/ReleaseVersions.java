@@ -1,4 +1,4 @@
-package interview;
+package interview.google;
 
 public class ReleaseVersions {
     public static String[] solution(String[] l) {
