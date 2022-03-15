@@ -1,9 +1,8 @@
-package common;
+package template;
 
 import org.junit.jupiter.api.Test;
-import template.MergeSort;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class MergeSortTest {
     MergeSort mergeSort = new MergeSort();
